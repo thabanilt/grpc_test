@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package users;
+option go_package = "github.com/chikondot/guroo/services/users/userpb";
+
+// NOTE ::: username is the unique ID for all operations
+
+message User {
+    string username = 1;
+    string domain = 2;
+    string password = 3;
+    double balance = 4;
+    string email = 5;
+    string alias_username = 6;
+    string alias_domain = 7;
+    string created = 997;
+    string modified = 998;   
+    string vcode = 999; 
+}
+message UsersResponse{
+    repeated User users=1;
+}
+
+// SERVICES USING ::: Login()
+message login {
+    string username = 1;
+    string domain = 2;
+    string password = 3;
+}
+
+// SERVICES USING ::: Verification()
+message verify {
+    string username = 1;
+}
+
+// SERVICES USING ::: Registration()
+message register {
+    User user = 1;
+}
+
+// SERVICES USING ::: Display(), Update(), Remove(), List()
+message information {
+    string username = 1;
+    string domain = 2;
+    string email = 3;
+    string alias_username = 4;
+    string alias_domain = 5;
+}
+
+// RESPONSE with information for respective user
+message details {
+    string result = 1;
+    string username = 2;
+    string domain = 3;
+    string alias_username = 4;
+}
+
+// UserS service rpc definitions
+service userService {
+    
+    rpc Display(information) returns (UsersResponse); // return all specific user information
+    
+}
